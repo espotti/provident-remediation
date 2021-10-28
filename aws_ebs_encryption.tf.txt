@@ -1,0 +1,25 @@
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_encryption_by_default
+
+resource "aws_ebs_encryption_by_default" "insite_ebs_encryption" {
+  enabled = true
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_snapshot
+
+resource "aws_ebs_volume" "insite_ebs" {
+  availability_zone = "us-west-2a"
+  size              = 100
+
+  tags = {
+    Name = "Insite_ebs"
+  }
+}
+
+resource "aws_ebs_snapshot" "insite_snapshot" {
+  volume_id = aws_ebs_volume.insite_ebs.id
+
+  tags = {
+    Name = "Insite_snap"
+  }
+}
+
